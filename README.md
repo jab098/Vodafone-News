@@ -15,7 +15,7 @@ Install Django package into your virtual environment
 
 ### Running
 
-`manage.py runserver`
+`py manage.py runserver`
 
 ### Accessing Admin View
 
