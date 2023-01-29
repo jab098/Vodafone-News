@@ -11,6 +11,9 @@ Activate the virtual environment, to ensure all python packages are installed in
 Install Django package into your virtual environment
 `py -m pip install django`
 
+Install Crispy forms package into your virtual environment
+`py -m pip install django-crispy-forms`
+
 ## Usage
 
 ### Running
