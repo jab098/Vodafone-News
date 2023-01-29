@@ -10,6 +10,8 @@ def register(request):
         # this happens after the user submits the sign up form
         form = UserCreationForm(request.POST)
         if form.is_valid():
+            # save responses
+            form.save()
             username = form.cleaned_data.get('username')
             # using flash message
             messages.success(request, f'Account created for {username}')
@@ -17,5 +19,5 @@ def register(request):
             return redirect('home')
     else:
         form = UserCreationForm()
-        
+
     return render(request=request, template_name='users/register.html', context={'form': form})
