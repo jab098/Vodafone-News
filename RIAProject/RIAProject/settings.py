@@ -33,13 +33,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',  # core authentication framework with models
     'django.contrib.contenttypes',  # allows permissions to be associated with models
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'VodaNews'
+    'VodaNews',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -132,3 +134,5 @@ LOGIN_REDIRECT_URL = '/'
 
 # Temporary setting to email anything to terminal until email functionality is added
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4' # setting default css package for crispy forms
