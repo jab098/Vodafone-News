@@ -58,6 +58,16 @@
             </div>
         </nav>
         
+        <!-- put any flash messages above content block -->
+        {% if messages %}
+            {% for mesage in messages %}
+            <!-- as the django message types are the same as bootstrap classes, we can pass these in to determine the alert type -->
+            <div class="alert alert-{{ message.tags}}">
+                {{ message}}
+            </div>
+            {% endfor %}
+        {% endif %}
+
         {% block content %}
         <!-- Content Goes here -->
         {% endblock content %}

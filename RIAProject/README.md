@@ -23,13 +23,13 @@ Go to http://127.0.0.1:8000/admin
 
 ### Accessing Login
 
-http://127.0.0.1:8000/accounts/login/
+http://127.0.0.1:8000/users/accounts/login/
 
 ### Accessing Log Out
 
-http://127.0.0.1:8000/accounts/logout/
+http://127.0.0.1:8000/users/accounts/logout/
 
 ### Accessing Password Reset
 
-http://127.0.0.1:8000/accounts/password_reset/
+http://127.0.0.1:8000/users/accounts/password_reset/
 Currently, this only works if the email address is actually associated with a user. A link will appear in the terminal output
