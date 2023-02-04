@@ -6,6 +6,7 @@
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Blog Post</legend>
+                <!-- loads in all data automatically using crispy forms -->
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">

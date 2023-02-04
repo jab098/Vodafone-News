@@ -34,10 +34,13 @@ class PostCreate(LoginRequiredMixin, generic.CreateView):
         form.instance.slug = slugify(form.instance.title)
         return super().form_valid(form)
 
-
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+# TODO: work out how to use userpassestestmixin to validate who can edit the post
+class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
+    login_url = '/users/accounts/login/'
     model = Post
-    fields = ['title', 'content']
+    template_name = 'post_form.html'
+    # added slug incase user wants to change it from the default
+    fields = ['title', 'slug', 'content', 'status']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
