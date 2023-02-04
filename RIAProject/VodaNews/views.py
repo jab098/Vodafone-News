@@ -26,13 +26,12 @@ class PostCreate(LoginRequiredMixin, generic.CreateView):
     login_url = '/users/accounts/login/'
     model = Post
     template_name = 'post_form.html'
-    fields = ['title', 'content']   
-    # TODO: add in slug
+    fields = ['title','content', 'status']   
+    
     def form_valid(self,form):
-        # before getting the form ,set the author equal to the user currently logged in
+        # before saving the form, update some of the values
         form.instance.author = self.request.user
         form.instance.slug = slugify(form.instance.title)
-        
         return super().form_valid(form)
 
 

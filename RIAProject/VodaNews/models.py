@@ -29,5 +29,4 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         # setting the redirect url, passing in the primary key
-        # return reverse('home')
         return reverse('post_detail', kwargs={'slug':self.slug})
