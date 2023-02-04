@@ -34,8 +34,7 @@ class PostCreate(LoginRequiredMixin, generic.CreateView):
         form.instance.slug = slugify(form.instance.title)
         return super().form_valid(form)
 
-# TODO: work out how to use userpassestestmixin to validate who can edit the post
-class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     login_url = '/users/accounts/login/'
     model = Post
     template_name = 'post_form.html'
@@ -47,6 +46,21 @@ class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
         return super().form_valid(form)
 
     def test_func(self):
+        # used by UserPassesTestMiin to ensure only the authr of the post can update it
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    login_url = '/users/accounts/login/'
+    model = Post
+    template_name = 'post_confirm_delete.html'
+    # defines where to redirect the user after deleting the post
+    success_url = '/posts/'
+
+    def test_func(self):
+        # used by UserPassesTestMiin to ensure only the authr of the post can delete it
         post = self.get_object()
         if self.request.user == post.author:
             return True
