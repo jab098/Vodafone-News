@@ -57,7 +57,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
     model = Post
     template_name = 'post_confirm_delete.html'
     # defines where to redirect the user after deleting the post
-    success_url = '/posts/'
+    success_url = '/'
 
     def test_func(self):
         # used by UserPassesTestMiin to ensure only the authr of the post can delete it
