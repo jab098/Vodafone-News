@@ -7,6 +7,13 @@
         <h1>{% block title %} {{ object.title }} {% endblock title %}</h1>
         <p class=" text-muted">{{ post.author }} | {{ post.created_on }}</p>
         <p class="card-text ">{{ object.content | safe }}</p>
+        <!-- EDIT AND DELETE -->
+        <!-- only buttons if the post was written by the user -->
+        {% if user.is_authenticated and post.author == request.user %}
+          <!-- redirect user -->
+          <a href="{% url 'post_edit' post.slug  %}" class="btn btn-info">Edit Post</a>
+          <a href="{% url 'post_delete' post.slug  %}" class="btn btn-danger">Delete Post</a>
+        {% endif %}
       </div>
     </div>
     {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
@@ -69,6 +76,7 @@
     </div>
 
   </div>
+
 </div>
 
 {% endblock content %}

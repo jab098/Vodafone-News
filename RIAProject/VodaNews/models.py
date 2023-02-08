@@ -1,5 +1,6 @@
 #importing the models class
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 
@@ -14,7 +15,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey(User, on_delete= models.CASCADE,related_name='blog_posts')
-    updated_on = models.DateTimeField(auto_now= True)
+    updated_on = models.DateTimeField(auto_now=True)
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
@@ -35,7 +36,6 @@ class Post(models.Model):
         return self.author.username + ', ' + self.title
     
     def get_absolute_url(self):
-        from django.urls import reverse
         return reverse("post_detail", kwargs={"slug": str(self.slug)})
     
     def number_of_likes(self):
@@ -51,3 +51,6 @@ class BlogComment(models.Model):
 
     def __str__(self):
         return str(self.author) + ', ' + self.blogpost_connected.title[:40]
+    def get_absolute_url(self):
+        # setting the redirect url, passing in the primary key
+        return reverse('post_detail', kwargs={'slug':self.slug})
