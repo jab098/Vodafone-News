@@ -134,7 +134,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/posts/'
+LOGIN_REDIRECT_URL = '/'
 
 # Temporary setting to email anything to terminal until email functionality is added
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
