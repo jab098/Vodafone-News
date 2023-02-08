@@ -12,6 +12,7 @@ def LikeView(request, slug):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
     #post = Post.objects.get(id=pk)
     liked = False
+    #if user has already like the post
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
         liked = False
