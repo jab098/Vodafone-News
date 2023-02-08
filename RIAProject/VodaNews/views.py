@@ -8,6 +8,19 @@ from django.urls import reverse
 # displays the objects in the model 'Post' in a list in the given template
 
 
+def LikeView(request, slug):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    #post = Post.objects.get(id=pk)
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+    return HttpResponseRedirect(reverse('post_detail', args=[str(slug)]))
+    
+
 class PostList(generic.ListView):
 
     # Filtering the posts to only display published posts (in the tuple 1=publish) it
@@ -17,14 +30,6 @@ class PostList(generic.ListView):
 
 # DetailView gives a detailed view of a given object in the model at the specified template
 
-def BlogPostLike(request, pk):
-        post = get_object_or_404(Post, id=request.POST.get('blogpost_id'), slug=request.POST.get('slug'))
-        if post.likes.filter(id=request.user.id).exists():
-            post.likes.remove(request.user)
-        else:
-            post.likes.add(request.user)
-
-        return HttpResponseRedirect(reverse('blogpost_like', args=[str(pk)]))
 
 class PostDetail(generic.DetailView):
     model = Post
@@ -35,13 +40,14 @@ class PostDetail(generic.DetailView):
         comments_connected = BlogComment.objects.filter(
             blogpost_connected=self.get_object()).order_by('-date_posted')
         data['comments'] = comments_connected
-        likes_connected = get_object_or_404(Post, id=self.object.pk)
-        liked = False
+        #likes_connected = get_object_or_404(Post, id=self.kwargs['pk'])
+        #total_likes=likes_connected.number_of_likes()
+        #liked = False
         
-        if likes_connected.likes.filter(id=self.request.user.id).exists():
-            liked = True
-        data['number_of_likes'] = likes_connected.number_of_likes()
-        data['post_is_liked'] = liked
+        #if likes_connected.likes.filter(id=self.request.user.id).exists():
+        #    liked = True
+        #data['number_of_likes'] = total_likes
+        #data['post_is_liked'] = liked
         if self.request.user.is_authenticated:
             data['comment_form'] = CommentForm(instance=self.request.user)
 
