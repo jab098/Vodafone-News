@@ -7,7 +7,7 @@ from django.urls import reverse
 
 # displays the objects in the model 'Post' in a list in the given template
 
-
+#function to get the id of the post and check whether the user has liked it or not in order to update the table
 def LikeView(request, slug):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
     #post = Post.objects.get(id=pk)
