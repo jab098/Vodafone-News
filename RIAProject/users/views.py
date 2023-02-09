@@ -34,7 +34,7 @@ def requestWriterPermissions(request):
             form.save()
             messages.success(request, f'Request submitted')
             # redirect user to the home screen now they have created an account
-            # return redirect('home')
+            return redirect('home')
             
     else:
         # load the form when they first visit the page

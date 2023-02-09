@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import messages
+from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -35,13 +36,11 @@ class WriterRequestForm(forms.ModelForm):
         fields = ("requestee","department","description")
 
     def save(request):
-        # TODO: creatre write request table
-        print(request.cleaned_data)
-        # TODO: ensure status is set to 0
         requestee=request.cleaned_data['requestee']
         department=request.cleaned_data['department']
         description=request.cleaned_data['description']
         request = WriteRequest.objects.create(requestee=requestee, department=department, description=description)
+        return redirect('home')
         # user.set_password(self.cleaned_data["password1"])
         # if commit:
         #     user.save()

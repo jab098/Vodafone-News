@@ -23,10 +23,6 @@ class WriteRequest(models.Model):
     class Meta:
         ordering = ['-created_on']
 
-    #readable representation of the object
-    # def __str__(self):
-    #     return self.title
-
     def get_absolute_url(self):
         # setting the redirect url, passing in the primary key
         return reverse('home')
