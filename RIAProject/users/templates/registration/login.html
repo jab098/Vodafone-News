@@ -137,32 +137,32 @@
 </style>
 
 <body>
-  {% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
-
-  {% if next %}
-  {% if user.is_authenticated %}
-  <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-  {% else %}
-  <p>Please login to see this page.</p>
-  {% endif %}
-  {% endif %}
-
   <div class="center">
     <h1>User Login <img src="{% static 'user_icon.png' %}" alt="Icon" width="50" height="50"></h1>
     <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
       <div class="txt_field">
-        <input type="text" required>
+        {{ form.username }}
         <span></span>
-        <label>Username</label>
+        <label>{{ form.username.label_tag }}</label>
       </div>
       <div class="txt_field">
-        <input type="password" required>
+        {{ form.password }}
         <span></span>
-        <label>Password</label>
+        <label>{{ form.password.label_tag }}</label>
       </div>
+      {% if form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+      {% endif %}
+
+      {% if next %}
+      {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.</p>
+      {% else %}
+      <p>Please login to see this page.</p>
+      {% endif %}
+      {% endif %}
       <div class="pass"><a href="{% url 'password_reset' %}">Forgot Password?</a></div>
       <input type="submit" value="Login">
       <div class="signup_link">
@@ -170,20 +170,6 @@
       </div>
     </form>
   </div>
-
-  {% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
-
-  {% if next %}
-  {% if user.is_authenticated %}
-  <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-  {% else %}
-  <p>Please login to see this page.</p>
-  {% endif %}
-  {% endif %}
-
 </body>
 
 </html>
