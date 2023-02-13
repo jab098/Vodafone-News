@@ -28,23 +28,24 @@
         background-color: #ffffff;
     }
 </style>
-
-<div class="container">
-    <div class="row">
-        <!-- Blog Entries Column -->
-        <div class="col-md-8 mt-3 left">
-            {% for post in post_list %}
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title">{{ post.title }}</h2>
-                    <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
-                    <p class="card-text">{{post.content|slice:":200" }}</p>
-                    <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Read More &rarr;</a>
-                </div>
-            </div>
+    {% if searched %}
+    <div class="container">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <h1>You searched for {{ searched}}</h1>
+            <br/>
+            {% for post in searched_articles %}
+                <a href="{% url 'post_detail' post.slug  %}">{{post.title}} - {{post.author}}</a><br/>
             {% endfor %}
         </div>
-        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
     </div>
-</div>
+    {% else %}
+    <div class="container">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <h1>Enter a search term</h1>
+    
+        </div>
+    </div>
+    {% endif %}
 {%endblock%}
