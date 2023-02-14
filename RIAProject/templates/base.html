@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load auth_extras %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -134,20 +134,28 @@
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-                  </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">My Articles <span class="sr-only">(current)</span></a>
                 </li>
+                <!-- check if user has write permissions before showing the my articles button -->
+                {% if request.user|in_group:"Writers" %} 
+                    <li class="nav-item active">
+                    <a class="nav-link" href="#">My Articles <span class="sr-only">(current)</span></a>
+                    </li>
+                {% endif %}
                 <li class="nav-item dropdown">
                   <a class="dropdown-toggle hidden-arrow" type="button" href="#" id="dropdownMenuicon" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-user-o" aria-hidden="true"></i>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{% url 'home'%}">My Account</a>
-                    <a class="dropdown-item" href="#">My Articles</a>
-                    <a class="dropdown-item" href="{% url 'post-add'%}">Create An Article</a>
+                    {% if request.user|in_group:"Writers" %} 
+                        <a class="dropdown-item" href="#">My Articles</a>
+                        <a class="dropdown-item" href="{% url 'post-add'%}">Create An Article</a>
+                    {% endif %}
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'request-writer'%}">Request Writer Permissions</a>
+                    <!-- only show this button if the user isn't already a writer -->
+                    {% if request.user|not_in_group:"Writers" %} 
+                        <a class="dropdown-item" href="{% url 'request-writer'%}">Request Writer Permissions</a>
+                    {% endif %}
                     <a class="dropdown-item" href="{% url 'password_reset'%}">Reset Password</a>
                     <a class="dropdown-item" href="{% url 'logout'%}">Log Out</a>
                   </div>
