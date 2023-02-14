@@ -45,11 +45,3 @@ def requestWriterPermissions(request):
         form = WriterRequestForm(initial={'requestee':current_user})
 
     return render(request=request, template_name='users/request_write.html', context={'form': form})
-
-class SignedOutView(TemplateView):
-
-    template_name = "registration/logged_out.html"
-
-    def get(self, request: HttpRequest):
-        logout(request)
-        return render(request, self.template_name)
