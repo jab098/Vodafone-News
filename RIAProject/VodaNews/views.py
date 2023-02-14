@@ -67,7 +67,8 @@ class PostDetail(LoginRequiredMixin, generic.DetailView):
         #data['number_of_likes'] = total_likes
         #data['post_is_liked'] = liked
         if self.request.user.is_authenticated:
-            data['comment_form'] = CommentForm(instance=self.request.user)
+            current_user = self.request.user
+            data['comment_form'] = CommentForm(instance=self.request.user, initial={'author':current_user})
 
         return data
     
