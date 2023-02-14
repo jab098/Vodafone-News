@@ -1,6 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
+from django.contrib.auth import logout
+from django.http import HttpRequest
+from django.views.generic.base import TemplateView
 
 from .forms import UserRegisterForm, WriterRequestForm
 
@@ -42,3 +45,11 @@ def requestWriterPermissions(request):
         form = WriterRequestForm(initial={'requestee':current_user})
 
     return render(request=request, template_name='users/request_write.html', context={'form': form})
+
+class SignedOutView(TemplateView):
+
+    template_name = "registration/logged_out.html"
+
+    def get(self, request: HttpRequest):
+        logout(request)
+        return render(request, self.template_name)
