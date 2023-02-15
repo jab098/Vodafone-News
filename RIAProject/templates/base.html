@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load auth_extras %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -119,9 +119,11 @@
                 <div class="row">
                     <div class=" col-md-8 col-md-10 mx-auto">
                         <div class="site-heading">
-                            <h1 class="head_text" style="display:inline; white-space:nowrap;">
-                                <img src="{% static 'voda_icon.png' %}" alt="Icon" width="70" height="70" float>
-                                VodaNews
+                            <h1 class="head_text" style="display:inline; white-space:nowrap;color: inherit; text-decoration: none;">
+                                <a href="{% url 'home'%}" style="color:black; text-decoration:none;">
+                                    <img src="{% static 'voda_icon.png' %}" alt="Icon" width="70" height="70" float>
+                                    VodaNews
+                                </a>
                             </h1>
                         </div>
                     </div>
@@ -131,28 +133,31 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">My Articles <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Saved Articles</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Policy</a>
-                </li>
+                <!-- check if user has write permissions before showing the my articles button -->
+                {% if request.user|in_group:"Writers" %} 
+                    <li class="nav-item active">
+                    <a class="nav-link" href="#">My Articles <span class="sr-only">(current)</span></a>
+                    </li>
+                {% endif %}
                 <li class="nav-item dropdown">
                   <a class="dropdown-toggle hidden-arrow" type="button" href="#" id="dropdownMenuicon" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-user-o" aria-hidden="true"></i>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{% url 'my_account'%}">My Account</a>
-                    <a class="dropdown-item" href="#">My Articles</a>
-                    <a class="dropdown-item" href="#">Saved Articles</a>
-                    <a class="dropdown-item" href="{% url 'post-add'%}">Create An Article</a>
+                    {% if request.user|in_group:"Writers" %} 
+                        <a class="dropdown-item" href="#">My Articles</a>
+                        <a class="dropdown-item" href="{% url 'post-add'%}">Create An Article</a>
+                    {% endif %}
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Log Out</a>
+                    <!-- only show this button if the user isn't already a writer -->
+                    {% if request.user|not_in_group:"Writers" %} 
+                        <a class="dropdown-item" href="{% url 'request-writer'%}">Request Writer Permissions</a>
+                    {% endif %}
+                    <a class="dropdown-item" href="{% url 'password_reset'%}">Reset Password</a>
+                    <a class="dropdown-item" href="{% url 'logout'%}">Log Out</a>
                   </div>
                 </li>
                 <li class="nav-item dropdown">
