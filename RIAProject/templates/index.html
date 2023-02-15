@@ -29,25 +29,10 @@
     }
 </style>
 
-<header class="masthead">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class=" col-md-8 col-md-10 mx-auto">
-                <div class="site-heading">
-                    <h1 class="head_text">
-                        <img src="{% static 'voda_icon.png' %}" alt="Icon" width="70" height="70">
-                        VodaNews
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
 <div class="container">
     <div class="row">
         <!-- Blog Entries Column -->
-        <div class="col-md-8 mt-3 left">
+        <div class="col-md-12 mt-3 left">
             {% for post in post_list %}
             <div class="card mb-4">
                 <div class="card-body">
@@ -59,7 +44,6 @@
             </div>
             {% endfor %}
         </div>
-        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
     </div>
 </div>
 {%endblock%}

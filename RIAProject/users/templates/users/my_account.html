@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% block title %} My Account {%endblock%}
 {% block content %}
 {% load static %}
 <style>
@@ -117,6 +118,7 @@
 
 <body>
     <div class="center">
+        
         <form method="POST">
             <!-- creating cross site request forgery token to protect the form agadinst attacks -->
             {% csrf_token %}
@@ -124,20 +126,16 @@
                 <form method="POST">
                     {% csrf_token %}
                     <fieldset class="form-group" style="">
-                        <legend class="join">Signup <img src="{% static 'user_icon.png' %}" alt="Icon" width="30"
+                        <legend class="join">My Account <img src="{% static 'user_icon.png' %}" alt="Icon" width="30"
                                 height="30"></legend>
                         <!-- crispy forms styles and validates the forms for us -->
                         {{ form | crispy }}
                     </fieldset>
+                    <div class="pass"><a href="{% url 'password_reset' %}">Change Password?</a></div>
                     <div class="form-group">
-                        <button class="register" type="submit">Sign Up</button>
+                        <button class="register" type="submit">Update Profile</button>
                     </div>
                 </form>
-                <div class="border-top pt-3">
-                    <small class="text-muted">
-                        Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
-                    </small>
-                </div>
             </div>
         </form>
     </div>

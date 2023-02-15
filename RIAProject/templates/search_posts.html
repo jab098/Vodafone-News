@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+
+    .head_text {
+        color: #e00201;
+    }
+
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+
+    .btn-primary {
+        background-color: #e00201;
+    }
+
+    .btn:hover {
+        background-color: #5e5e5e;
+    }
+
+    .masthead {
+        background-color: #ffffff;
+    }
+</style>
+    {% if searched %}
+    <div class="container">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <h1>You searched for {{ searched}}</h1>
+            <br/>
+            {% for post in searched_articles %}
+                <a href="{% url 'post_detail' post.slug  %}">{{post.title}} - {{post.author}}</a><br/>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="container">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <h1>Enter a search term</h1>
+    
+        </div>
+    </div>
+    {% endif %}
+{%endblock%}

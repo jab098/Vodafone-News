@@ -6,11 +6,24 @@ from django.template.defaultfilters import slugify
 
 from .models import Post, BlogComment
 from .forms import CommentForm
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 # displays the objects in the model 'Post' in a list in the given template
+
+def search_posts(request):
+    if request.method == "POST":
+        searched = request.POST.get('searched')
+        searched_articles= Post.objects.filter(title__contains=searched)
+        return render(request, 
+            'search_posts.html',
+            {'searched':searched,
+            'searched_articles':searched_articles})
+    else:
+        return render(request, 
+            'search_posts.html',
+            {})
 
 #function to get the id of the post and check whether the user has liked it or not in order to update the table
 def LikeView(request, slug):
@@ -54,7 +67,8 @@ class PostDetail(LoginRequiredMixin, generic.DetailView):
         #data['number_of_likes'] = total_likes
         #data['post_is_liked'] = liked
         if self.request.user.is_authenticated:
-            data['comment_form'] = CommentForm(instance=self.request.user)
+            current_user = self.request.user
+            data['comment_form'] = CommentForm(instance=self.request.user, initial={'author':current_user})
 
         return data
     
