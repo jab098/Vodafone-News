@@ -1,8 +1,19 @@
 from django.contrib import messages
+from django.views import generic
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
+from django.contrib.auth.forms import UserChangeForm
+from django.urls import reverse_lazy
+from .forms import UserRegisterForm, WriterRequestForm, EditProfileForm 
 
-from .forms import UserRegisterForm, WriterRequestForm
+class UserEditView(generic.UpdateView):
+    #form_class = EditProfileForm
+    template_name = 'users/my_account.html'
+    success_url = reverse_lazy('home')
+    fields = ['first_name', 'last_name', 'username', 'email']
+
+    def get_object(self):
+        return self.request.user
 
 def register(request):
     # register user
