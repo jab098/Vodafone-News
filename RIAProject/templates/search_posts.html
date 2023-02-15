@@ -31,12 +31,26 @@
     {% if searched %}
     <div class="container">
         <div class="row">
-            <!-- Blog Entries Column -->
-            <h1>You searched for {{ searched}}</h1>
-            <br/>
-            {% for post in searched_articles %}
-                <a href="{% url 'post_detail' post.slug  %}">{{post.title}} - {{post.author}}</a><br/>
-            {% endfor %}
+            {% if searched_articles %}
+                <!-- Blog Entries Column -->
+                <h1>You searched for {{ searched}}</h1>
+                <br/>
+                <div class="col-md-12 mt-3 left"></div>
+                    {% for post in searched_articles %}
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">{{ post.title }}</h2>
+                                <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
+                                <p class="card-text">{{post.content|slice:":200" }}</p>
+                                <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+            {% else %}
+                <h1>No articles match your search</h1>
+            {% endif %}
         </div>
     </div>
     {% else %}
