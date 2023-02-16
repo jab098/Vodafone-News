@@ -32,7 +32,7 @@
 <div class="container">
     <div class="row">
         <!-- Blog Entries Column -->
-        <div class="col-md-12 mt-3 left">
+        <div class="col-md-8 mt-3 left">
             {% for post in post_list %}
             <div class="card mb-4">
                 <div class="card-body">
@@ -44,6 +44,7 @@
             </div>
             {% endfor %}
         </div>
+        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
     </div>
 </div>
 {%endblock%}

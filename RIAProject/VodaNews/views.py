@@ -46,6 +46,17 @@ class PostList(LoginRequiredMixin, generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'index.html'
 
+class MyPostList(LoginRequiredMixin, generic.ListView):
+    login_url = '/users/accounts/login/'
+    # Filtering the posts to only display published posts (in the tuple 1=publish) it
+    # is also filtering the created on date to show the most recent post at the top
+    #queryset = Post.objects.filter(status=1).order_by('-created_on')
+    template_name = 'my_articles.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        return Post.objects.filter(author=user).order_by('-created_on')
+
 # DetailView gives a detailed view of a given object in the model at the specified template
 
 class PostDetail(LoginRequiredMixin, generic.DetailView):
@@ -67,8 +78,7 @@ class PostDetail(LoginRequiredMixin, generic.DetailView):
         #data['number_of_likes'] = total_likes
         #data['post_is_liked'] = liked
         if self.request.user.is_authenticated:
-            current_user = self.request.user
-            data['comment_form'] = CommentForm(instance=self.request.user, initial={'author':current_user})
+            data['comment_form'] = CommentForm(instance=self.request.user)
 
         return data
     
