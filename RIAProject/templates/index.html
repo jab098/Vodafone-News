@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
+{% load pwa %}
+{% progressive_web_app_meta %}
+<link rel="manifest" href="#manifest.json">
 <style>
     body {
         font-family: "Roboto", sans-serif;
