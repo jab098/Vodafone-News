@@ -28,22 +28,26 @@
         background-color: #ffffff;
     }
 </style>
-
-<div class="container">
-    <div class="row">
-        <!-- Blog Entries Column -->
-        <div class="col-md-12 mt-3 left">
-            {% for post in post_list %}
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title">{{ post.title }}</h2>
-                    <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
-                    <p class="card-text">{{post.content|slice:":200" }}</p>
-                    <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Read More &rarr;</a>
+<html>
+    {% load pwa %}
+    {% progressive_web_app_meta %}
+    <link rel="manifest" href="manifest.json">
+    <div class="container">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <div class="col-md-12 mt-3 left">
+                {% for post in post_list %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ post.title }}</h2>
+                        <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
+                        <p class="card-text">{{post.content|slice:":200" }}</p>
+                        <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
-</div>
-{%endblock%}
+    {%endblock%}
+</html>
