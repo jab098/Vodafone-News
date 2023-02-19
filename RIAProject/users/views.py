@@ -10,6 +10,7 @@ class UserEditView(generic.UpdateView):
     #form_class = EditProfileForm
     template_name = 'users/my_account.html'
     success_url = reverse_lazy('home')
+    # fields to display
     fields = ['first_name', 'last_name', 'username', 'email']
 
     def get_object(self):

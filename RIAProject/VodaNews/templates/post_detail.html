@@ -27,6 +27,7 @@
 
         <!-- LIKES -->
         <form action="{% url 'like_post' post.slug %}" method="POST" style="margin-bottom: 10px;">
+          <!-- secure random token to protect against csrf attacks -->
           {% csrf_token %}
           <!-- check if the user has already liked the post -->
           {% if user in post.likes.all %}

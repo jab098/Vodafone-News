@@ -116,14 +116,15 @@
 </style>
 
 <body>
-    <div class="center">
+    <!-- fit the whole page -->
+    <div class="content-section">
         <form method="POST">
             <!-- creating cross site request forgery token to protect the form agadinst attacks -->
             {% csrf_token %}
             <div>
                 <form method="POST">
                     {% csrf_token %}
-                    <fieldset class="form-group" style="">
+                    <fieldset class="form-group">
                         <legend class="join">Signup <img src="{% static 'user_icon.png' %}" alt="Icon" width="30"
                                 height="30"></legend>
                         <!-- crispy forms styles and validates the forms for us -->

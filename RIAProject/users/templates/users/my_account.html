@@ -123,6 +123,7 @@
             {% csrf_token %}
             <div>
                 <form method="POST">
+                    <!-- secure random token to protect against csrf attacks -->
                     {% csrf_token %}
                     <fieldset class="form-group" style="">
                         <legend class="join">My Account <img src="{% static 'user_icon.png' %}" alt="Icon" width="30"

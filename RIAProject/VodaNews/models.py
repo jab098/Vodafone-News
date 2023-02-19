@@ -12,6 +12,7 @@ STATUS = (
 
 #subclass of models.Model, called post containing the following attributes:
 class Post(models.Model):
+    # model defining the post
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey(User, on_delete= models.CASCADE,related_name='blog_posts')
@@ -20,8 +21,6 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
     likes = models.ManyToManyField(User, related_name='blogpost_like')
-    #image = models.ImageField(upload_to='blog_images',
-                              #storage=gd_storage, null=True, blank=True)
 
     @property
     def number_of_comments(self):
