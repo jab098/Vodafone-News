@@ -29,24 +29,13 @@
     }
 </style>
 
-<header class="masthead">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class=" col-md-8 col-md-10 mx-auto">
-                <div class="site-heading">
-                    <h1 class="head_text">
-                        My Articles
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
 <div class="container">
+    <!-- show header -->
+    <legend class="border-bottom mb-4" style="margin-top: 10px";>My Articles</legend>
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8 mt-3 left">
+            <!-- loop through each post and display -->
             {% for post in post_list %}
 
                     <div class="card mb-4">

@@ -2,6 +2,7 @@ from . import views
 from django.urls import path
 from .views import LikeView
 
+# defines the urls relative to the ip address/domain name (path set for this project is empty)
 urlpatterns = [
     # using class based views
     path('', views.PostList.as_view(), name='home'),

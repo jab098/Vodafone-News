@@ -136,9 +136,11 @@
 </style>
 
 <body>
+  <!-- creating box in the center of the page -->
   <div class="center">
     <h1>User Login <img src="{% static 'user_icon.png' %}" alt="Icon" width="50" height="50"></h1>
     <form method="post" action="{% url 'login' %}">
+      <!-- secure random token to protect against csrf attacks -->
       {% csrf_token %}
       <div class="txt_field">
         {{ form.username }}
@@ -150,11 +152,14 @@
         <span></span>
         <label>{{ form.password.label_tag }}</label>
       </div>
+
+      <!-- checking for errors in the form -->
       {% if form.errors %}
       <p style="color:#e00201">Your username and password didn't match. Please try again.</p>
       {% endif %}
 
       {% if next %}
+      <!-- checking if the user is logged in -->
       {% if user.is_authenticated %}
       <p>Your account doesn't have access to this page. To proceed,
         please login with an account that has access.</p>
