@@ -23,17 +23,19 @@ Install Django pwa to enable progressive web app (RIA) behaviour
 
 `py manage.py runserver`
 
+### Creating admin user
+
+`py manage.py createsuperuser`
+
+### Creating end user
+
+Please follow the front-end screens to do this
+
+(You will need an end-user and admin user to be able to test all of the functionality)
+
 ### Accessing Admin View
 
 Go to http://127.0.0.1:8000/admin
-
-### Accessing Login
-
-http://127.0.0.1:8000/users/accounts/login/
-
-### Accessing Log Out
-
-http://127.0.0.1:8000/users/accounts/logout/
 
 ### Accessing Password Reset
 
