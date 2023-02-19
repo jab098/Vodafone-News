@@ -14,6 +14,9 @@ Install Django package into your virtual environment
 Install Crispy forms package into your virtual environment
 `py -m pip install django-crispy-forms`
 
+Install Django pwa to enable progressive web app (RIA) behaviour
+`py -m pip install django-pwa`
+
 ## Usage
 
 ### Running
