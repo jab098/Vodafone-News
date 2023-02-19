@@ -1,64 +1,81 @@
 {% extends 'base.html' %} {% block content %}
 
+<style>
+  /* targeting the comment text box using it's id defined in the model */
+  #id_content{
+    width: 100%; 
+    max-width: 100%;
+  }
+
+  /* removing bullet points from the comments */
+  ul {
+    list-style-type: none;
+  }
+</style>
+
 <div class="container">
   <div class="row">
+    <!-- using bootstrap classes to ensure this is responsive -->
     <div class="col-md-12 card mb-4  mt-3 left  top">
       <div class="card-body">
         <h1>{% block title %} {{ object.title }} {% endblock title %}</h1>
         <p class=" text-muted">{{ post.author }} | {{ post.created_on }}</p>
         <p class="card-text ">{{ object.content | safe }}</p>
+
+        <!-- displays the number of likes -->
+        {{ post.number_of_likes }} Likes
+
+        <!-- LIKES -->
+        <form action="{% url 'like_post' post.slug %}" method="POST" style="margin-bottom: 10px;">
+          {% csrf_token %}
+          <!-- check if the user has already liked the post -->
+          {% if user in post.likes.all %}
+            <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-secondary">Unlike</button> 
+          {% else %}
+            <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger">Like</button>
+          {% endif %}
+        </form>
+
         <!-- EDIT AND DELETE -->
         <!-- only buttons if the post was written by the user -->
         {% if user.is_authenticated and post.author == request.user %}
           <!-- redirect user -->
-          <a href="{% url 'post_edit' post.slug  %}" class="btn btn-info">Edit Post</a>
+          <a href="{% url 'post_edit' post.slug  %}" class="btn btn-secondary">Edit Post</a>
           <a href="{% url 'post_delete' post.slug  %}" class="btn btn-danger">Delete Post</a>
         {% endif %}
       </div>
     </div>
-
-    <!-- LIKES -->
-    <form action="{% url 'like_post' post.slug %}" method="POST">
-      {% csrf_token %}
-
-    {% if user.is_authenticated %}
-      {% if user in post.likes.all %}
-        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger btn-sm">Unlike</button> 
-      {% else %}
-        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm">Like</button>
-      
-      {% endif %}
-    {% else %} 
-      <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Log in to like!</a><br>
-    {% endif %}
-      - {{ post.number_of_likes }} Likes
-    </form>
-  
+  </div>
+  <div class="row">
     <!-- COMMENTS  -->
     <h2>Leave your comment!</h2>
+  </div>
     <div id="comments_section">
-
-      {% if user.is_authenticated %}
       <form method="POST">
         {% csrf_token %}
         <div class="form-group">
-          {{ comment_form }}
-          <button class="btn btn-info" type="submit">Add comment <i class="fas fa-comments"></i></button>
+          <div class="row">
+            <!-- comment form only consists of the comment content, the author is added automatically as it's saved -->
+            {{ comment_form }}
+          </div>
+          <div class="row" style="margin-top: 10px;">
+            <button class="btn btn-secondary" type="submit">Add comment</button>
+          </div>
+          
         </div>
       </form>
-      {% else %}
-      <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Log in to add a comment!</a><br>
-      {% endif %}
 
+      <!-- checking if there is any comments on the post -->
       {% if comments %}
-      <strong class="text-secondary">{{ object.number_of_comments }} Comment{{ object.number_of_comments|pluralize }}</strong>
+      <strong class="text-danger">{{ object.number_of_comments }} Comment{{ object.number_of_comments|pluralize }}</strong>
       <hr>
       <ul>
+        <!-- loop through each comment and display -->
         {% for comment in comments %}
         <li>           
         <div>
             <span>
-              <strong class="text-info">{{ comment.author }} </strong>
+              <strong class="text-danger">{{ comment.author }} </strong>
               <small class="text-muted">{{ comment.date_posted }}</small>
             </span>
             <p>

@@ -69,14 +69,6 @@ class PostDetail(LoginRequiredMixin, generic.DetailView):
         comments_connected = BlogComment.objects.filter(
             blogpost_connected=self.get_object()).order_by('-date_posted')
         data['comments'] = comments_connected
-        #likes_connected = get_object_or_404(Post, id=self.kwargs['pk'])
-        #total_likes=likes_connected.number_of_likes()
-        #liked = False
-        
-        #if likes_connected.likes.filter(id=self.request.user.id).exists():
-        #    liked = True
-        #data['number_of_likes'] = total_likes
-        #data['post_is_liked'] = liked
         if self.request.user.is_authenticated:
             current_user = self.request.user
             data['comment_form'] = CommentForm(instance=self.request.user, initial={'author':current_user})
